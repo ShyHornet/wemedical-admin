@@ -29,7 +29,6 @@
               <script src="js/plugins/toastr/toastr.min.js"></script>
 
           <script src="js/content.min.js?v=1.0.0"></script>
-            <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
 
 </head>
@@ -60,13 +59,12 @@
             <div class="ibox-content">
                 <div class="row row-lg">
                     <div class="col-sm-12">
-                        <h4 class="example-title">从URL加载</h4>
                         <div class="example">
                             <div class="btn-group hidden-xs" id="toolbar" role="group">
-                                    <button type="button" class="btn btn-outline btn-default" id="add">
+                                    <button type="button" class="btn btn-outline btn-default" id="add-btn">
                                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline btn-default" id="remove"disabled>
+                                    <button type="button" class="btn btn-outline btn-default" id="remove-btn"disabled>
                                         <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
                                     </button>
                             </div>
@@ -91,6 +89,168 @@
                 </div>
             </div>
         </div>
+        <div class="wrapper wrapper-content animated fadeInRight"id="add" style="display:none;">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>新增医生信息</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#">选项1</a>
+                            </li>
+                            <li><a href="#">选项2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                  <div class="form-horizontal">
+                    <input type="hidden" id="domain" value="http://7xtjpk.com1.z0.glb.clouddn.com/">
+                    <input type="hidden" id="uptoken_url" value="../wemedical/Admin-index-uptoken">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">照片</label>
+                        <div class="col-sm-10">
+                      <img class="img-thumbnail" id="doc_img" src="img/ImgHolder.png" style="max-height:180px;max-width:150p" alt="" />
+                    </div>
+                  </div>
+                    <div class="form-group" style="margin-top:10px;">
+                      <div class="col-sm-10 col-sm-offset-2" id="upload-container">
+                        <a class="btn btn-primary" id="pickfiles" type="button"><span class="fa fa-image"></span>选择照片</a>
+                        <a class="btn btn-default" id="img-replace" type="button"><span class="fa fa-gear"></span>更换照片</a>
+                      </div>
+                    </div>
+                    <div class="form-group"  hidden>
+                      <label class="col-sm-2 control-label">上传进度</label>
+                      <div class=" col-sm-3">
+                        <div class="progress" >
+                            <div class="progress-bar progress-bar-striped active" id="uploadProgress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                            </div>
+                          </div>
+                          <span style="margin-left:60%;" id="percent"></span>
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <form method="post" class="form-horizontal" id="addForm" action="../wemedical/Admin-index-updateDoc">
+                               <input type="text" class="form-control" name="doctor_id" id="doctor_id" style="display:none;">
+                               <input type="text" name="img-url" id="img-url" value="" hidden>
+
+
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">姓名</label>
+
+                                  <div class="col-sm-10">
+                                      <input type="text" class="form-control" name="name" id="name">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">性别</label>
+
+                                  <div class="col-sm-10">
+                                      <select class="form-control m-b" name="gender" id="gender">
+                                          <option value="1">男</option>
+                                          <option value="0">女</option>
+                                      </select>
+                              </div>
+                            </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">手机号</label>
+                                  <div class="col-sm-10">
+                                      <input type="text" class="form-control" name="phone" id="phone">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">职称</label>
+                                  <div class="col-sm-10">
+                                      <select class="form-control m-b" name="title" id="title">
+                                          <option value="0">副主治医师</option>
+                                          <option value="1">主治医师</option>
+                                          <option value="2">副主任医师</option>
+                                          <option value="3">主任医师</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">科室</label>
+
+                                  <div class="col-sm-10">
+                                      <select class="form-control m-b" name="department" id="department">
+                                        <option value="0">心血管内科</option>
+                                        <option value="1">呼吸内科</option>
+                                        <option value="2">神经内科</option>
+                                        <option value="3">肾病内科</option>
+                                        <option value="4">消化内科</option>
+                                        <option value="5">血液病内科</option>
+                                        <option value="6">内分泌内科</option>
+                                        <option value="7">普通外科</option>
+                                        <option value="8">肝胆外科</option>
+                                        <option value="9">胃肠外科</option>
+                                        <option value="10">痔漏外科</option>
+                                        <option value="11">心脏外科</option>
+                                        <option value="12">骨外科</option>
+                                        <option value="13">神经外科</option>
+                                        <option value="14">泌尿外科</option>
+                                        <option value="15">整形外科</option>
+                                        <option value="16">烧伤外科</option>
+                                        <option value="17">妇科</option>
+                                        <option value="18">产科</option>
+                                         <option value="19">辅助生殖</option>
+                                         <option value="20">儿科</option>
+                                         <option value="21">眼科</option>
+                                         <option value="22">口腔科</option>
+                                         <option value="23">耳鼻喉科</option>
+                                         <option value="24">皮肤科</option>
+                                         <option value="25">中西医结合科</option>
+                                         <option value="26">传染科</option>
+
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">专长</label>
+
+                                  <div class="col-sm-10">
+                                      <input type="text" class="form-control" name="specialism" id="specialism" value="" />
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">每天预约数</label>
+
+                                  <div class="col-sm-10">
+                                      <input type="number" class="form-control" name="orders_per_day" id="orders_per_day" value="" />
+                                  </div>
+                              </div>
+
+                             <div class="hr-line-dashed"></div>
+                              <div class="form-group">
+                               <label class="col-sm-2 control-label">简介：</label>
+                               <div class="col-sm-10">
+                                   <textarea id="intro" name="intro" class="form-control" style="min-height:100px;" required="" aria-required="true"></textarea>
+                               </div>
+                           </div>
+
+
+                              <div class="hr-line-dashed"></div>
+                              <div class="form-group">
+                                  <div class="col-sm-4 col-sm-offset-2">
+                                      <button class="btn btn-primary" type="submit">添加</button>
+                                      <a class="btn btn-default" id="add-cancel" type="button">取消</a>
+                                  </div>
+                              </div>
+                          </form>
+                    </div>
+                </div>
+            </div>
         <div class="wrapper wrapper-content animated fadeInRight"id="edit" style="display:none;">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -114,6 +274,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+
                   <form method="post" class="form-horizontal" id="editForm" action="../wemedical/Admin-index-updateDoc">
                                <input type="text" class="form-control" name="doctor_id" id="doctor_id" style="display:none;">
                               <div class="form-group">
@@ -214,661 +375,21 @@
                               <div class="form-group">
                                   <div class="col-sm-4 col-sm-offset-2">
                                       <button class="btn btn-primary" type="submit">保存内容</button>
-                                      <a class="btn btn-default" id="cancel" type="button">取消</a>
+                                      <a class="btn btn-default" id="edit-cancel" type="button">取消</a>
                                   </div>
                               </div>
                           </form>
                     </div>
                 </div>
             </div>
+               <!-- <script src="js/plugins/plupload/plupload.full.min.js"></script> -->
+               <script type="text/javascript" src="js/plugins/plupload/moxie.js"></script>
+             <script type="text/javascript" src="js/plugins/plupload/plupload.dev.js"></script>
+               <script src="js/plugins/qiniu/qiniu.js"></script>
               <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
-        <script type="text/javascript">
-$(function(){
+              <script src="js/docManage.js"></script>
+              <script src="js/imgUpload.js"></script>
 
-  var $table = $('#docInfo');
-  var $remove = $('#remove');
-  var selections = [];
-  var titles = {'副主治医师':0,'主治医师':1,'副主任医师':2,'主任医师':3};
-  var depts = {	"心血管内科":0,"呼吸内科":1, "神经内科":2, "肾病内科":3,
-  "消化内科":4,"血液病内科":5,"内分泌内科":6,"普通外科":7,"肝胆外科":8,"胃肠外科":9,
-  "痔漏外科":10,"心脏外科":11,"骨外科":12,"神经外科":13,"泌尿外科":14,"整形外科":15,
-  "烧伤外科":16,"妇科":17,"产科":18,"辅助生殖":19,"儿科":20,"眼科":21,"口腔科":22,"耳鼻喉科":23,
-  "皮肤科":24,"中西医结合科":25,"传染科":26,}
-window.operateEvents = {
-      'click .edit': function (e, value, row, index) {
-
-            $('#edit').find('#doctor_id').val(row.doctor_id);
-           $('#edit').find('#name').val(row.name);
-           $('#edit').find('#gender').val(row.gender);
-           $('#edit').find('#phone').val(row.phone);
-           $('#edit').find('#title').val(titles[row.title]);
-           $('#edit').find('#department').val(depts[row.department]);
-           $('#edit').find('#specialism').val(row.specialism);
-           $('#edit').find('#orders_per_day').val(row.orders_per_day);
-            $('#edit').find('#intro').val(row.intro);
-           $('#edit').show();
-
-      },
-  };
-$table.on('check.bs.table uncheck.bs.table ' +
-        'check-all.bs.table uncheck-all.bs.table', function () {
-    $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-    // save your data, here just save the current page
-    selections = getIdSelections();
-    // push or splice the selections if you want to save all data selections
-});
-$remove.click(function () {
-      swal({
-        title:getIdSelections().length==1?"您确定要删除这条记录?":"您确定要删除所选记录?",
-        text: "删除后将无法恢复，请谨慎操作！",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "删除",
-        cancelButtonText:"取消",
-        closeOnConfirm:false,
-        closeOnCancel:false
-        }, function (isConfirm) {
-              if (isConfirm) {
-                  var ids = getIdSelections();
-                  console.log(ids);
-                  $.getJSON("../wemedical/Admin-index-delDoc",{id:ids},function(json){
-                      if (json!=null){
-                        console.log(json);
-                          if (json['status']=='success') {
-                            $table.bootstrapTable('remove', {
-                              field: 'doctor_id',
-                              values: ids
-                            });
-
-                            $remove.prop('disabled', true);
-                            swal("删除成功！", getIdSelections().length==1?"您已经永久删除了这条记录":"您已经永久删除了所选记录", "success");
-                          }
-                      }
-                    });
-
-
-
-
-                }else{
-                  swal("已取消","您取消了删除操作！","error");
-
-                }
-           });
-});
-//消息通知选项
-toastr.options = {
-"closeButton": true,
-"debug": false,
-"progressBar": true,
-"positionClass": "toast-top-right",
-"onclick": null,
-"showDuration": "400",
-"hideDuration": "1000",
-"timeOut": "7000",
-"extendedTimeOut": "1000",
-"showEasing": "swing",
-"hideEasing": "linear",
-"showMethod": "fadeIn",
-"hideMethod": "fadeOut"
-}
-$("#cancel").click(function(){
-  $("#edit").addClass("slideOutLeft animated");
-  setTimeout(function(){
-    $("#edit").hide();
-      $("#edit").removeClass("slideOutLeft animated");
-  },600);
-
-});
-$('#editForm').ajaxForm({
-  beforeSubmit:function(){
-   console.log("即将提交。。。");
-  },
-  success:function(data){
-    if(data.status=="success"){
-       toastr.success('',"医生信息更新成功!")
-
-    }else {
-        toastr.error('',"医生信息更新失败!")
-    }
-
-
-  },
-  dataType:'json'
-});
-function getIdSelections() {
- return $.map($table.bootstrapTable('getSelections'), function (row) {
-     return row.doctor_id
- });
-}
-  $('#docInfo').bootstrapTable({
-
-    url: '../wemedical/Admin-index-getAllDocs',
-    columns: [  {
-      field: 'status',
-      title: '',
-       checkbox:true,
-    },
-
-      {
-      field: 'doctor_id',
-      title: 'ID',
-       sortable: true
-    }, {
-      field: 'name',
-      title: '姓名',
-       sortable: true
-    }, {
-      field: 'title',
-      title: '职称'
-
-    },  {
-        field: 'department',
-        title: '科室'
-
-      }, {
-          field: 'specialism',
-          title: '专长'
-
-        }, {
-            field: 'order_cost',
-            title: '挂号费/￥',
-             sortable: true
-
-          }, {
-              field: 'orders_per_day',
-              title: '每日号源数',
-               sortable: true
-
-            },{
-                field: 'treatment_period',
-                title: '出诊时段'
-
-              },{
-                  field: 'operate',
-                  title: ' 操作 ',
-                  align: 'center',
-                  events: operateEvents,
-                  formatter: operateFormatter
-              }]
-  });
-  function detailFormatter(index, row) {
-var html = [];
-$.each(row, function (key, value) {
-    html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-});
-return html.join('');
- }
- function operateFormatter(value, row, index) {
- return [
-     '<a class="edit" href="javascript:void(0)" title="编辑">',
-     '<i class="fa fa-edit"></i>',
-     '</a>  ',
- ].join('');
-}
-});
-
-
-
-        </script>
-
-        <!-- End Panel Basic -->
-
-        <!-- Panel Style -->
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>样式</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#">选项1</a>
-                        </li>
-                        <li><a href="#">选项2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <div class="row row-lg">
-                    <div class="col-sm-6">
-                        <!-- Example Classes -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">类名称</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-classes="table table-hover table-condensed" data-url="js/demo/table_base.json" data-striped="true" data-height="250" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="Tid">ID</th>
-                                            <th data-field="First">姓名</th>
-                                            <th data-field="sex">性别</th>
-                                            <th data-field="Score">评分</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Classes -->
-                    </div>
-
-                    <div class="col-sm-6">
-                        <!-- Example Align -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">对齐</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/bootstrap_table_test2.json" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="name" data-halign="right" data-align="center">名称</th>
-                                            <th data-field="star" data-halign="center" data-align="left">Star</th>
-                                            <th data-field="description" data-halign="left" data-align="right">描述</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Align -->
-                    </div>
-
-                    <div class="clearfix hidden-xs"></div>
-
-                    <div class="col-sm-6">
-                        <!-- Example Rowstyle -->
-                        <div class="example-wrap margin-sm-0">
-                            <h4 class="example-title">行样式</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/table_base.json" data-mobile-responsive="true" data-row-style="rowStyle" data-height="250">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="Tid">ID</th>
-                                            <th data-field="First">姓名</th>
-                                            <th data-field="sex">性别</th>
-                                            <th data-field="Score">评分</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Rowstyle -->
-                    </div>
-
-                    <div class="col-sm-6">
-                        <!-- Example Cellstyle -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">列样式</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/bootstrap_table_test2.json" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="name" data-cell-style="cellStyle">名称</th>
-                                            <th data-field="star">Star</th>
-                                            <th data-field="description">描述</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Cellstyle -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Panel Style -->
-
-        <!-- Panel Sort & Hideheader -->
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>排序&amp;隐藏头部</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#">选项1</a>
-                        </li>
-                        <li><a href="#">选项2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <div class="row row-lg">
-                    <div class="col-sm-6">
-                        <!-- Example Basic Sort -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">基本排序</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/table_base.json" data-height="250" data-sort-name="First" data-sort-order="desc" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="Tid" data-sortable="true">ID</th>
-                                            <th data-field="First" data-sortable="true">姓名</th>
-                                            <th data-field="sex" data-sortable="true">性别</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Basic Sort -->
-                    </div>
-
-                    <div class="col-sm-6">
-                        <!-- Example Format Sort -->
-                        <div class="example-wrap margin-sm-0">
-                            <h4 class="example-title">格式排序</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/bootstrap_table_test2.json" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="name" data-formatter="nameFormatter">名称</th>
-                                            <th data-field="star" data-formatter="starsFormatter">Star</th>
-                                            <th data-field="license">许可</th>
-                                            <th data-field="url">地址</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Format Sort -->
-                    </div>
-
-                    <div class="clearfix hidden-xs"></div>
-
-                    <div class="col-sm-6">
-                        <!-- Example Custom Sort -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">自定义排序</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/table_base.json" data-height="250" data-sort-name="Score" data-sort-order="desc" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="Tid" data-align="center" data-sortable="true">ID</th>
-                                            <th data-field="First" data-align="left" data-sortable="true">姓名</th>
-                                            <th data-field="Score" data-sortable="true" data-sorter="scoreSorter">评分</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Custom Sort -->
-                    </div>
-
-                    <div class="col-sm-6">
-                        <!-- Example Hide Header -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">隐藏头部</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/table_base.json" data-height="250" data-show-header="false" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="Tid">ID</th>
-                                            <th data-field="First">姓名</th>
-                                            <th data-field="sex">性别</th>
-                                            <th data-field="Score">评分</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Hide Header -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Panel Sort & Hideheader -->
-
-        <!-- Panel Columns & Select -->
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>列&amp;选择</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#">选项1</a>
-                        </li>
-                        <li><a href="#">选项2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <div class="row row-lg">
-                    <!-- Basic Columns -->
-                    <div class="col-sm-6">
-                        <!-- Example Basic Columns -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">基本列</h4>
-                            <div class="example">
-                                <table id="exampleTableColumns" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="state" data-radio="true"></th>
-                                            <th data-field="name" data-switchable="false">名称</th>
-                                            <th data-field="price">价格</th>
-                                            <th data-field="column1">列1</th>
-                                            <th data-field="column2" data-visible="false">列2</th>
-                                            <th data-field="column3" data-switchable="false">列3</th>
-                                            <th data-field="column4" data-visible="false">列4</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Basic Columns -->
-                    </div>
-
-                    <div class="col-sm-6">
-                        <!-- Example Large Columns -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">数据较多的列</h4>
-                            <div class="example">
-                                <table id="exampleTableLargeColumns" data-show-columns="true" data-height="400" data-mobile-responsive="true"></table>
-                            </div>
-                        </div>
-                        <!-- End Example Large Columns -->
-                    </div>
-
-                    <div class="clearfix hidden-xs"></div>
-
-                    <div class="col-sm-6">
-                        <!-- Example Radio Select -->
-                        <div class="example-wrap margin-sm-0">
-                            <h4 class="example-title">单选框</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/bootstrap_table_test.json" data-height="299" data-click-to-select="true" data-select-item-name="myRadioName" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="state" data-radio="true"></th>
-                                            <th data-field="name">名称</th>
-                                            <th data-field="price">价格</th>
-                                            <th data-field="column1">列1</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Radio Select -->
-                    </div>
-
-                    <div class="col-sm-6">
-                        <!-- Example Checkbox Select -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">复选框</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/bootstrap_table_test.json" data-height="299" data-click-to-select="true" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="state" data-checkbox="true"></th>
-                                            <th data-field="name">名称</th>
-                                            <th data-field="price">价格</th>
-                                            <th data-field="column1">列1</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Checkbox Select -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Panel Columns & Select -->
-
-        <!-- Panel Other -->
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>其他</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#">选项1</a>
-                        </li>
-                        <li><a href="#">选项2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <div class="row row-lg">
-                    <div class="col-sm-12">
-                        <!-- Example Card View -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">卡片视图</h4>
-                            <div class="example">
-                                <table data-toggle="table" data-url="js/demo/bootstrap_table_test2.json" data-card-view="true" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="name">名称</th>
-                                            <th data-field="star">Star</th>
-                                            <th data-field="license">许可</th>
-                                            <th data-field="description">描述</th>
-                                            <th data-field="url">地址</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Card View -->
-                    </div>
-
-                    <div class="col-sm-12">
-                        <!-- Example Toolbar -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">工具条</h4>
-                            <div class="example">
-                                <div class="btn-group hidden-xs" id="exampleToolbar" role="group">
-                                    <button type="button" class="btn btn-outline btn-default">
-                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-outline btn-default">
-                                        <i class="glyphicon glyphicon-heart" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-outline btn-default">
-                                        <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <table id="exampleTableToolbar" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="name">名称</th>
-                                            <th data-field="star">Star</th>
-                                            <th data-field="license">许可</th>
-                                            <th data-field="description">描述</th>
-                                            <th data-field="url">地址</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Toolbar -->
-                    </div>
-
-                    <div class="col-sm-12">
-                        <!-- Example Pagination -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">分页：客户端</h4>
-                            <div class="example">
-                                <table id="exampleTablePagination" data-toggle="table" data-url="js/demo/bootstrap_table_test.json" data-query-params="queryParams" data-mobile-responsive="true" data-height="400" data-pagination="true" data-icon-size="outline" data-search="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="state" data-checkbox="true"></th>
-                                            <th data-field="id">ID</th>
-                                            <th data-field="name">名称</th>
-                                            <th data-field="price">价格</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Pagination -->
-                    </div>
-
-                    <div class="col-sm-12">
-                        <!-- Example Events -->
-                        <div class="example-wrap">
-                            <h4 class="example-title">事件</h4>
-                            <div class="example">
-                                <div class="alert alert-success" id="examplebtTableEventsResult" role="alert">
-                                    事件结果
-                                </div>
-                                <div class="btn-group hidden-xs" id="exampleTableEventsToolbar" role="group">
-                                    <button type="button" class="btn btn-outline btn-default">
-                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-outline btn-default">
-                                        <i class="glyphicon glyphicon-heart" aria-hidden="true"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-outline btn-default">
-                                        <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
-                                    </button>
-                                </div>
-                                <table id="exampleTableEvents" data-height="400" data-mobile-responsive="true">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="state" data-checkbox="true"></th>
-                                            <th data-field="id">ID</th>
-                                            <th data-field="name">名称</th>
-                                            <th data-field="price">价格</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- End Example Events -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Panel Other -->
     </div>
 
     <!-- <script src="js/content.min.js?v=1.0.0"></script> -->
