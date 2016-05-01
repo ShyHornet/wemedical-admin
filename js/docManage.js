@@ -15,40 +15,36 @@ $(function(){
   "showMethod": "fadeIn",
   "hideMethod": "fadeOut"
   }
+  //设置操作事件
+  window.operateEvents = {
+        'click .edit': function (e, value, row, index) {
+             if (row.img_url) {
+               console.log(row.img_url);
+                 $('#edit').find('#doc_img').attr("src",row.img_url);
+             }
+              $('#edit').find('#doctor_id').val(row.doctor_id);
+             $('#edit').find('#name').val(row.name);
+             $('#edit').find('#gender').val(row.gender);
+             $('#edit').find('#phone').val(row.phone);
+             $('#edit').find('#title').val(titles[row.title]);
+             $('#edit').find('#department').val(depts[row.department]);
+             $('#edit').find('#specialism').val(row.specialism);
+             $('#edit').find('#orders_per_day').val(row.orders_per_day);
+              $('#edit').find('#intro').val(row.intro);
+              if ($("#edit").find('#doc_img').attr('src')=="img/ImgHolder.png") {
+                $("#edit").find("#filepicks-edit").closest('span').removeClass("fa-gear").addClass("fa-image").html("选择照片");
+              }else{
+                $("#edit").find("#filepicks-edit").closest('span').removeClass("fa-image").addClass("fa-gear").html("更换照片");
+              }
+             $('#edit').show();
+
+        },
+    };
+    var $table = $('#docInfo');
+    var $remove = $('#remove-btn');
+    var $add = $('#add-btn');
+    var selections = [];
 //医生信息数据表
-  var $table = $('#docInfo');
-  var $remove = $('#remove-btn');
-  var $add = $('#add-btn');
-  var selections = [];
-  var titles = {'副主治医师':0,'主治医师':1,'副主任医师':2,'主任医师':3};
-  var depts = {	"心血管内科":0,"呼吸内科":1, "神经内科":2, "肾病内科":3,
-  "消化内科":4,"血液病内科":5,"内分泌内科":6,"普通外科":7,"肝胆外科":8,"胃肠外科":9,
-  "痔漏外科":10,"心脏外科":11,"骨外科":12,"神经外科":13,"泌尿外科":14,"整形外科":15,
-  "烧伤外科":16,"妇科":17,"产科":18,"辅助生殖":19,"儿科":20,"眼科":21,"口腔科":22,"耳鼻喉科":23,
-  "皮肤科":24,"中西医结合科":25,"传染科":26,}
-window.operateEvents = {
-      'click .edit': function (e, value, row, index) {
-
-            $('#edit').find('#doctor_id').val(row.doctor_id);
-           $('#edit').find('#name').val(row.name);
-           $('#edit').find('#gender').val(row.gender);
-           $('#edit').find('#phone').val(row.phone);
-           $('#edit').find('#title').val(titles[row.title]);
-           $('#edit').find('#department').val(depts[row.department]);
-           $('#edit').find('#specialism').val(row.specialism);
-           $('#edit').find('#orders_per_day').val(row.orders_per_day);
-            $('#edit').find('#intro').val(row.intro);
-           $('#edit').show();
-
-      },
-  };
-$table.on('check.bs.table uncheck.bs.table ' +
-        'check-all.bs.table uncheck-all.bs.table', function () {
-    $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-    // save your data, here just save the current page
-    selections = getIdSelections();
-    // push or splice the selections if you want to save all data selections
-});
 $('#docInfo').bootstrapTable({
 
   url: '../wemedical/Admin-index-getAllDocs',
@@ -100,26 +96,23 @@ $('#docInfo').bootstrapTable({
                 formatter: operateFormatter
             }]
 });
-function getIdSelections() {
- return $.map($table.bootstrapTable('getSelections'), function (row) {
-     return row.doctor_id
- });
-}
 
-  function detailFormatter(index, row) {
-var html = [];
-$.each(row, function (key, value) {
-    html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+  var titles = {'副主治医师':0,'主治医师':1,'副主任医师':2,'主任医师':3};
+  var depts = {	"心血管内科":0,"呼吸内科":1, "神经内科":2, "肾病内科":3,
+  "消化内科":4,"血液病内科":5,"内分泌内科":6,"普通外科":7,"肝胆外科":8,"胃肠外科":9,
+  "痔漏外科":10,"心脏外科":11,"骨外科":12,"神经外科":13,"泌尿外科":14,"整形外科":15,
+  "烧伤外科":16,"妇科":17,"产科":18,"辅助生殖":19,"儿科":20,"眼科":21,"口腔科":22,"耳鼻喉科":23,
+  "皮肤科":24,"中西医结合科":25,"传染科":26,}
+
+
+$table.on('check.bs.table uncheck.bs.table ' +
+        'check-all.bs.table uncheck-all.bs.table', function () {
+    $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+    // save your data, here just save the current page
+    selections = getIdSelections();
+    // push or splice the selections if you want to save all data selections
 });
-return html.join('');
- }
- function operateFormatter(value, row, index) {
- return [
-     '<a class="edit" href="javascript:void(0)" title="编辑">',
-     '<i class="fa fa-edit"></i>',
-     '</a>  ',
- ].join('');
-}
+
 $add.click(function(){
 $("#add").show();
 });
@@ -190,11 +183,31 @@ $('#editForm').ajaxForm({
     }else {
         toastr.error('',"医生信息更新失败!")
     }
-
-
   },
   dataType:'json'
 });
 
 
 });
+function getIdSelections() {
+ return $.map($table.bootstrapTable('getSelections'), function (row) {
+     return row.doctor_id
+ });
+}
+
+  function detailFormatter(index, row) {
+    console.log(row);
+var html = [];
+
+$.each(row, function (key, value) {
+    html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+});
+return html.join('');
+ }
+ function operateFormatter(value, row, index) {
+ return [
+     '<a class="edit" href="javascript:void(0)" title="编辑">',
+     '<i class="fa fa-edit"></i>',
+     '</a>  ',
+ ].join('');
+}
